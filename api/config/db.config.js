@@ -1,17 +1,17 @@
-const mysql = require('mysql');
 
-const pool = mysql.createPool({
-    host:'bhg4lowxbarsk5uczcqs-mysql.services.clever-cloud.com',
-    user: 'upakifvdnxj3iwhd',
-    password:'d5ITfnQves6NXueaZnfi',
-    database:'bhg4lowxbarsk5uczcqs'
+
+//import dotenv to allow access all variables defined on env
+
+require('dotenv').config()
+const {createPool} = require("mysql")
+const connection = createPool ({
+    host: processs.env.dbHost,
+    user: process.env.dbUser,
+    password: process.env.dbPwd,
+    port: process.env.dbPort,
+    database: process.env.dbName,
+    mulitipleStatements: true,
+    connectionLimit: 30
+
 })
-pool.query('SELECT * FROM users', (err, results) => {
-    if (err){
-        console.error('Error executing query:', err);
-    }
-    else {
-        console.log('Query results:', results);
-    }
-    pool.releaseConnection();
-});
+module.exports = connection;

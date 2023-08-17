@@ -16,6 +16,9 @@ const routes = require('./routes');
 app.use(express.json());
 app.use(cors());
 
+// View engine
+app.set('view-engine', 'ejs');
+
 //use routes
 app.use('/', routes);
 

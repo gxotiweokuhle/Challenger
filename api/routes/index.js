@@ -43,6 +43,12 @@ router.get('/users', userController.getUsers);
 router.get('/user/:id', userController.getUserById);
 
 
+// Get router view
+router.get('/register', (req, res) => {
+    res.render('register')
+})
+
+
 // router.get('/user/:id', (req, res) =>{
 //     //fetch and display a single user
 //     const userId = parseInt(req.params.id);

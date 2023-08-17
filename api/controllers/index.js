@@ -1,56 +1,39 @@
 //here i will have my functions to return responses to the routes
 
-// const users =[
-//     {id: 1, firstName: 'Abenathi', lastName: 'Sindapi', gender: 'Male', userDOB: '2000-03-04', emailAdd: 'abenathi@gmail.com', userPass: 'wrestling', profileUrl: 'nbbhjvhgvccg'},
-//     {id: 2, firstName: 'Sidwell', lastName: 'Batyi', gender: 'Male', userDOB: '2004-06-14', emailAdd: 'sidwell@gmail.com', userPass: 'freestyling', profileUrl: 'bjhbjhhvhg'},
-// ];
+const express = require('express');
+const bodyParser = require('body-parser')
+const routes = express.Router()
 
+//import model's objects
 
-//Controller for fetching all users
+const {users} = require('../model');
 
-exports.getUsers = (req, res) => {
-    res.json(users);
-};
+//users router
 
-//Controller for fetching a single user by id
+routes.get('/user', (req, res) => { //displays all users
+    users.fetchUsers(req, res)
+})
 
-exports.getUserById = (req, res) => {
-    const userId = parseInt(req.params.id);
-    const user = users.find(user => user.id === userId);
+routes.get('/user/:id', (req, res) => {//displays a single view of user/products
+    users.fetchUser(req, res)
+})
 
-    if (user) {
-        res.json(user);
-    } else {
-        res.status(404).json({ message: 'User not found' });
-    }
-};
+routes.post('/register', bodyParser.json(), (req, res) => {
+    users.register(req, res)
+})
+ 
+routes.put('/user/:id', bodyParser.json(), (req, res) => {
+    users.updateUser(req, res)
+})
 
-//Controller for updating a users record
+routes.patch('/user/:id', bodyParser.json(), (req, res) => {
+    users.updateUser(req, res)
+})
 
-exports.updateUserById = (req, res) => {
-    //allow user to update
-    const userId = parseInt(req.params.id);
-    const userIndex = users.findIndex(user => user.id === userId);
+routes.delete('/user/:id', bodyParser.json(), (req, res) => {
+    users.deleteUser(req, res)
+})
 
-    if (userIndex !== -1) {
-        const updatedUser = { ...users[userIndex], ...req.body };
-        users[userIndex] = updatedUser;
-        res.json({ message: 'User updated successfully', user: updatedUser });
-    } else {
-        res.status(404).json({ message: 'User not found' });
-    }
-};
-
-//Controller for deleting 
-
-exports.deleteUserById =  (req, res) => {
-    const userId = parseInt(req.params.id);
-    const userIndex = users.findIndex(user => user.id === userId);
-
-    if (userIndex !== -1) {
-        users.splice(userIndex, 1);
-        res.json({ message: 'User deleted successfully' });
-    } else {
-        res.status(404).json({ message: 'User not found' });
-    }
-};
+module.exports = {
+    express, routes
+}
