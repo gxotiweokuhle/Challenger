@@ -30,7 +30,7 @@ routes.patch('/user/:id', bodyParser.json(), (req, res) => {
     users.updateUser(req, res)
 })
 
-routes.delete('/user/:id', bodyParser.json(), (req, res) => {
+routes.delete('/user/:id', bodyParser.json(), (req, res) => {//allow user to delete
     users.deleteUser(req, res)
 })
 
